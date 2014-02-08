@@ -23,10 +23,15 @@ module.exports = (grunt) ->
       # configurable paths
       app: require("./bower.json").appPath or "app"
       dist: "dist"
+      temp: ".tmp"
 
 
     # Watches files for changes and runs tasks based on the changed files
     watch:
+      haml:
+        files: ["<%= yeoman.app %>/{,*/}*.haml"]
+        tasks: ["haml:dist"]
+
       coffee:
         files: ["<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}"]
         tasks: ["newer:coffee:dist"]
@@ -54,8 +59,8 @@ module.exports = (grunt) ->
 
         files: [
           "<%= yeoman.app %>/{,*/}*.html"
-          ".tmp/styles/{,*/}*.css"
-          ".tmp/scripts/{,*/}*.js"
+          "<%= yeoman.temp %>/styles/{,*/}*.css"
+          "<%= yeoman.temp %>/scripts/{,*/}*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
 
@@ -73,7 +78,7 @@ module.exports = (grunt) ->
         options:
           open: true
           base: [
-            ".tmp"
+            "<%= yeoman.temp %>"
             "<%= yeoman.app %>"
           ]
 
@@ -81,7 +86,7 @@ module.exports = (grunt) ->
         options:
           port: 9001
           base: [
-            ".tmp"
+            "<%= yeoman.temp %>"
             "test"
             "<%= yeoman.app %>"
           ]
@@ -106,13 +111,13 @@ module.exports = (grunt) ->
         files: [
           dot: true
           src: [
-            ".tmp"
+            "<%= yeoman.temp %>"
             "<%= yeoman.dist %>/*"
             "!<%= yeoman.dist %>/.git*"
           ]
         ]
 
-      server: ".tmp"
+      server: "<%= yeoman.temp %>"
 
 
     # Add vendor prefixed styles
@@ -123,9 +128,9 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: ".tmp/styles/"
+          cwd: "<%= yeoman.temp %>/styles/"
           src: "{,*/}*.css"
-          dest: ".tmp/styles/"
+          dest: "<%= yeoman.temp %>/styles/"
         ]
 
 
@@ -134,6 +139,31 @@ module.exports = (grunt) ->
       app:
         html: "<%= yeoman.app %>/index.html"
         ignorePath: "<%= yeoman.app %>/"
+
+    # Compiles Haml to Html
+    haml:
+      options:
+        doubleQuoteAttributes: true
+        escapeHtml: true
+        unixNewlines: true
+
+      dist:
+        files: [
+          expand: true
+          cwd: '<%= yeoman.app %>'
+          src: '{,*/}*.haml'
+          dest: '<%= yeoman.app %>'
+          ext: '.html'
+        ]
+
+      test:
+        files: [
+          expand: true
+          cwd: '<%= yeoman.test %>'
+          src: '{,*/}*.haml'
+          dest: '<%= yeoman.temp %>'
+          ext: '.html'
+        ]
 
 
     # Compiles CoffeeScript to JavaScript
@@ -147,7 +177,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
           src: "{,*/}*.coffee"
-          dest: ".tmp/scripts"
+          dest: "<%= yeoman.temp %>/scripts"
           ext: ".js"
         ]
 
@@ -156,7 +186,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: "test/spec"
           src: "{,*/}*.coffee"
-          dest: ".tmp/spec"
+          dest: "<%= yeoman.temp %>/spec"
           ext: ".js"
         ]
 
@@ -165,8 +195,8 @@ module.exports = (grunt) ->
     compass:
       options:
         sassDir: "<%= yeoman.app %>/styles"
-        cssDir: ".tmp/styles"
-        generatedImagesDir: ".tmp/images/generated"
+        cssDir: "<%= yeoman.temp %>/styles"
+        generatedImagesDir: "<%= yeoman.temp %>/images/generated"
         imagesDir: "<%= yeoman.app %>/images"
         javascriptsDir: "<%= yeoman.app %>/scripts"
         fontsDir: "<%= yeoman.app %>/styles/fonts"
@@ -260,9 +290,9 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: ".tmp/concat/scripts"
+          cwd: "<%= yeoman.temp %>/concat/scripts"
           src: "*.js"
-          dest: ".tmp/concat/scripts"
+          dest: "<%= yeoman.temp %>/concat/scripts"
         ]
 
 
@@ -293,7 +323,7 @@ module.exports = (grunt) ->
           }
           {
             expand: true
-            cwd: ".tmp/images"
+            cwd: "<%= yeoman.temp %>/images"
             dest: "<%= yeoman.dist %>/images"
             src: ["generated/*"]
           }
@@ -302,21 +332,24 @@ module.exports = (grunt) ->
       styles:
         expand: true
         cwd: "<%= yeoman.app %>/styles"
-        dest: ".tmp/styles/"
+        dest: "<%= yeoman.temp %>/styles/"
         src: "{,*/}*.css"
 
 
     # Run some tasks in parallel to speed up the build process
     concurrent:
       server: [
+        "haml:dist"
         "coffee:dist"
         "compass:server"
       ]
       test: [
+        "haml:test"
         "coffee"
         "compass"
       ]
       dist: [
+        "haml:dist"
         "coffee"
         "compass:dist"
         "imagemin"
@@ -387,6 +420,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "clean:dist"
     "bower-install"
+    "haml:dist" # usemin needs index.html
     "useminPrepare"
     "concurrent:dist"
     "autoprefixer"
