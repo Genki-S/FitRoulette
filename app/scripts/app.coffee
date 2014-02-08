@@ -4,7 +4,8 @@ angular.module('staticshowdownApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'ui.bootstrap'
 ])
   .config ($routeProvider) ->
     $routeProvider

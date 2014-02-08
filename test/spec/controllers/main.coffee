@@ -4,6 +4,8 @@ describe 'Controller: MainCtrl', () ->
 
   # load the controller's module
   beforeEach module 'staticshowdownApp'
+  # load the BootstrapUI module
+  beforeEach module 'ui.bootstrap'
 
   MainCtrl = {}
   scope = {}
