@@ -1,0 +1,7 @@
+{
+  "name": "ss14-team-252",
+  "root": "dist",
+  "error_page": "404.html",
+  "cache_control": {},
+  "routes": {}
+}
