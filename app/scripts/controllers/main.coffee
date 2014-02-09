@@ -9,6 +9,9 @@ angular.module('staticshowdownApp')
       keys = []
       for k, v of filteredWorkouts
         keys.push(k)
+      if keys.length == 0
+        alert("No Workout Found")
+        return
       hit = keys[Math.floor(Math.random() * keys.length)]
       $location.path("/workout/#{hit}")
 
