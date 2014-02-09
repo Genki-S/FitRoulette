@@ -4,6 +4,9 @@
 
 %button.btn.btn-block(ng-click="filter()") Filter
 
+%p
+  Filtered: {{workouts | workoutFilter:queryObj | objLength}} / Total: {{workouts.$getIndex() | objLength}}
+
 %table.table.table-striped
   %thead
     %tr
