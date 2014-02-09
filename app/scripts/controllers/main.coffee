@@ -1,29 +1,13 @@
 'use strict'
 
 angular.module('staticshowdownApp')
-  .controller 'MainCtrl', ['$scope', ($scope) ->
-    $scope.workouts = [
-      {
-        name: "push up"
-        mainMuscleGroup: "chest"
-        subMuscleGroups: ["triceps"]
-        type: "strength"
-        equipments: []
-        difficulty: "beginner"
-      }
-      {
-        name: "barbell bench press"
-        mainMuscleGroup: "chest"
-        subMuscleGroups: []
-        type: "strength"
-        equipments: ["barbell"]
-        difficulty: "intermediate"
-      }
-    ]
+  .controller 'MainCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
+    workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
+    $scope.workouts = $firebase(workoutRef);
   ]
 
 angular.module('staticshowdownApp')
-  .controller 'WorkoutCtrl', ['$scope', ($scope) ->
+  .controller 'WorkoutCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
     # Available Values
     $scope.muscleGroups = [
       "abs"
@@ -64,4 +48,11 @@ angular.module('staticshowdownApp')
       subMuscleGroups: {}
       equipments: {}
     }
+
+    # For submission
+    $scope.save = ->
+      workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
+      workouts = $firebase(workoutRef)
+      workouts.$add($scope.workout)
+      alert("Workout Saved!")
   ]

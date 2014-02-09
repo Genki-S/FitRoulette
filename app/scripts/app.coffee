@@ -5,7 +5,8 @@ angular.module('staticshowdownApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'firebase'
 ])
   .config ($routeProvider) ->
     $routeProvider

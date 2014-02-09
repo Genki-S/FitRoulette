@@ -9,7 +9,6 @@
   %h2 Sub Muscle Groups
   .sub-muscle-groups.btn-group(ng-repeat="muscleGroup in muscleGroups")
     %button.btn(ng-model="workout.subMuscleGroups[muscleGroup]" btn-checkbox) {{muscleGroup}}
-    -# %input(type="checkbox" ng-model="workout.subMuscleGroups[muscleGroup]") {{muscleGroup}}
 
   %h2 Type
   %select.form-control(ng-model="workout.type" ng-options="t for t in types")
@@ -22,7 +21,10 @@
   %select.form-control(ng-model="workout.difficulty" ng-options="d for d in difficulties")
 
   %h2 Description
-  %textarea(ng-model="workout.description")
+  %textarea.form-control(ng-model="workout.description")
 
   %h2 Youtube Id
-  %input(type="text" ng-model="workout.youtube")
+  %input.form-control(type="text" ng-model="workout.youtube")
+
+  %h2 Save
+  %button.btn.btn-primary.btn-block(ng-click="save()") SAVE
