@@ -157,6 +157,15 @@ angular.module('fitRouletteApp')
       $modalInstance.close($scope.queryObj)
     $scope.cancel = ->
       $modalInstance.dismiss('cancel')
+    $scope.clear = ->
+      # TODO: Don't Repeat Yourself
+      $scope.queryObj = {
+        name: ""
+        mainMuscleGroup: ""
+        equipments: {}
+        type: ""
+        difficulty: ""
+      }
 
     # TODO: Don't Repeat Yourself
     # Available Values
