@@ -1,6 +1,12 @@
 %a.btn.btn-primary.btn-block(href="#/workout/new") Add Workout
 
 %h1 Workouts
+.filter
+  %h2 Filter
+  .form-group
+    Name
+    %input.form-control(type="text" ng-model="query.name" value="")
+
 %table.table.table-striped
   %thead
     %tr
@@ -10,7 +16,7 @@
       %th Difficulty
       %th Controls
   %tbody
-    %tr(ng-repeat="(key, workout) in workouts")
+    %tr(ng-repeat="(key, workout) in workouts | workoutFilter:query")
       %td
         %a(href="#/workout/{{key}}") {{workout.name}}
       %td {{workout.mainMuscleGroup}}

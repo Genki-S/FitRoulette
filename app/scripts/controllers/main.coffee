@@ -96,4 +96,54 @@ angular.module('staticshowdownApp')
     $scope.delete = (key) ->
       if confirm("Delete workout \"#{$scope.workouts[key].name}\"?")
         $scope.workouts.$remove(key)
+
+    # Filter stuffs
+    $scope.query = {
+      name: ""
+    }
+
+    # TODO: Don't Repeat Yourself
+    # Available Values
+    $scope.muscleGroups = [
+      "abs"
+      "back"
+      "biceps"
+      "chest"
+      "forearm"
+      "glutes"
+      "shoulders"
+      "triceps"
+      "upper legs"
+      "lower legs"
+      "fullbody"
+    ]
+    $scope.types = [
+      "strength"
+      "plyometrics"
+      "cardio"
+      "stretching"
+    ]
+    $scope.equipments = [
+      "balance ball"
+      "band"
+      "barbell"
+      "bench"
+      "dumbbell"
+      "foam roller"
+      "kettlebell"
+    ]
+    $scope.difficulties = [
+      "beginner"
+      "intermediate"
+      "expert"
+    ]
   ]
+
+angular.module('fitRouletteFilters', [])
+  .filter 'workoutFilter', ->
+    (workouts, query) ->
+      result = {}
+      angular.forEach workouts, (workout, key) ->
+        if workout.name.indexOf(query.name) != -1
+            result[key] = workout
+      return result
