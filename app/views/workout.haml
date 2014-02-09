@@ -1,0 +1,27 @@
+%h1 {{workout.name}}
+
+%dl
+  %dt Main Muscle Group
+  %dd {{workout.mainMuscleGroup}}
+
+  %dt Sub Muscle Groups
+  %dd
+    %ul
+      %li(ng-repeat="m in workout.subMuscleGroups") {{m}}
+
+  %dt Type
+  %dd {{workout.type}}
+
+  %dt Equipments
+  %dd
+    %ul
+      %li(ng-repeat="e in workout.equipments") {{e}}
+
+  %dt Difficulty
+  %dd {{workout.difficulty}}
+
+  %dt Description
+  %dd {{workout.description}}
+
+  %dt Youtube
+  %dd TODO: EMBED

@@ -1,13 +1,13 @@
 'use strict'
 
 angular.module('staticshowdownApp')
-  .controller 'MainCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
+  .controller 'MainCtrl', ['$scope', '$firebase', '$location', ($scope, $firebase, $location) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     workouts = $firebase(workoutRef);
     $scope.play = ->
       keys = workouts.$getIndex()
       hit = keys[Math.floor(Math.random() * keys.length)]
-      $scope.hit = workouts[hit]
+      $location.path("/workout/#{hit}")
   ]
 
 angular.module('staticshowdownApp')
@@ -59,4 +59,12 @@ angular.module('staticshowdownApp')
       workouts = $firebase(workoutRef)
       workouts.$add($scope.workout)
       alert("Workout Saved!")
+  ]
+
+angular.module('staticshowdownApp')
+  .controller 'WorkoutDetailCtrl', ['$scope', '$firebase', '$routeParams', ($scope, $firebase, $routeParams) ->
+    workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
+    workouts = $firebase(workoutRef)
+    workouts.$on 'loaded', ->
+      $scope.workout = workouts[$routeParams.key]
   ]
