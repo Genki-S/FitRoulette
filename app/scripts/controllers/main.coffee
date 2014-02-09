@@ -3,7 +3,11 @@
 angular.module('staticshowdownApp')
   .controller 'MainCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
-    $scope.workouts = $firebase(workoutRef);
+    workouts = $firebase(workoutRef);
+    $scope.play = ->
+      keys = workouts.$getIndex()
+      hit = keys[Math.floor(Math.random() * keys.length)]
+      $scope.hit = workouts[hit]
   ]
 
 angular.module('staticshowdownApp')
