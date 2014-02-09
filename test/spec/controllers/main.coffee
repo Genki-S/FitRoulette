@@ -3,7 +3,7 @@
 describe 'Controller: MainCtrl', () ->
 
   # load the controller's module
-  beforeEach module 'staticshowdownApp'
+  beforeEach module 'fitRouletteApp'
   # load the BootstrapUI module
   beforeEach module 'ui.bootstrap'
 

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('staticshowdownApp', [
+angular.module('fitRouletteApp', [
   'fitRouletteFilters',
   'ngCookies',
   'ngResource',

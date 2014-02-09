@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('staticshowdownApp')
+angular.module('fitRouletteApp')
   .controller 'MainCtrl', ['$scope', '$firebase', '$location', '$modal', '$filter', 'localStorageService', ($scope, $firebase, $location, $modal, $filter, localStorageService) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     $scope.workouts = $firebase(workoutRef);
@@ -38,7 +38,7 @@ angular.module('staticshowdownApp')
       }
   ]
 
-angular.module('staticshowdownApp')
+angular.module('fitRouletteApp')
   .controller 'WorkoutCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
     # Available Values
     $scope.muscleGroups = [
@@ -109,7 +109,7 @@ angular.module('staticshowdownApp')
       $scope.reset()
   ]
 
-angular.module('staticshowdownApp')
+angular.module('fitRouletteApp')
   .controller 'WorkoutDetailCtrl', ['$scope', '$firebase', '$routeParams', '$sce', ($scope, $firebase, $routeParams, $sce) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     workouts = $firebase(workoutRef)
@@ -119,7 +119,7 @@ angular.module('staticshowdownApp')
       $sce.trustAsResourceUrl('http://www.youtube.com/embed/' + id)
   ]
 
-angular.module('staticshowdownApp')
+angular.module('fitRouletteApp')
   .controller 'WorkoutListCtrl', ['$scope', '$firebase', '$modal', ($scope, $firebase, $modal) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     $scope.workouts = $firebase(workoutRef)
@@ -148,7 +148,7 @@ angular.module('staticshowdownApp')
     }
   ]
 
-angular.module('staticshowdownApp')
+angular.module('fitRouletteApp')
   .controller 'FilterCtrl', ['$scope', '$modalInstance', 'localStorageService', 'queryObj', ($scope, $modalInstance, localStorageService, queryObj) ->
     $scope.queryObj = angular.copy(queryObj)
 
