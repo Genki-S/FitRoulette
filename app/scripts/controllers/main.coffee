@@ -150,7 +150,7 @@ angular.module('staticshowdownApp')
 
 angular.module('staticshowdownApp')
   .controller 'FilterCtrl', ['$scope', '$modalInstance', 'localStorageService', 'queryObj', ($scope, $modalInstance, localStorageService, queryObj) ->
-    $scope.queryObj = queryObj
+    $scope.queryObj = angular.copy(queryObj)
 
     $scope.ok = ->
       localStorageService.add('fitRouletteQuery', $scope.queryObj)
