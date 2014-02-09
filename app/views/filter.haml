@@ -1,0 +1,23 @@
+.modal-header
+  %h1 Filter
+.modal-body
+  .form-group
+    Name
+    %input.form-control(type="text" ng-model="queryObj.name" value="")
+  .form-group
+    Main Muscle Group
+    %select.form-control(ng-model="queryObj.mainMuscleGroup" ng-options="m for m in muscleGroups")
+  .form-group
+    Equipments
+    .equipments.btn-group(ng-repeat="equipment in equipments")
+      %button.btn(ng-model="queryObj.equipments[equipment]" btn-checkbox) {{equipment}}
+  .form-group
+    Type
+    %select.form-control(ng-model="queryObj.type" ng-options="t for t in types")
+  .form-group
+    Difficulty
+    %select.form-control(ng-model="queryObj.difficulty" ng-options="d for d in difficulties")
+.modal-footer
+  %button.btn.btn-primary(ng-click="ok()") OK
+  %button.btn.btn-warning(ng-click="cancel()") Cancel
+

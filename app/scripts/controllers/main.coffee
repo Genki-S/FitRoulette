@@ -92,7 +92,7 @@ angular.module('staticshowdownApp')
   ]
 
 angular.module('staticshowdownApp')
-  .controller 'WorkoutListCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
+  .controller 'WorkoutListCtrl', ['$scope', '$firebase', '$modal', ($scope, $firebase, $modal) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     $scope.workouts = $firebase(workoutRef)
     $scope.delete = (key) ->
@@ -100,13 +100,39 @@ angular.module('staticshowdownApp')
         $scope.workouts.$remove(key)
 
     # Filter stuffs
-    $scope.query = {
+    $scope.filter = ->
+      modalInstance = $modal.open
+        templateUrl: 'views/filter.html'
+        controller: 'FilterCtrl'
+        resolve:
+          queryObj: ->
+            $scope.queryObj
+
+      modalInstance.result.then (queryObj) ->
+        $scope.queryObj = queryObj
+
+    $scope.queryObj = {
       name: ""
+      mainMuscleGroup: ""
+      equipments: {}
+      type: ""
+      difficulty: ""
     }
+  ]
+
+angular.module('staticshowdownApp')
+  .controller 'FilterCtrl', ['$scope', '$modalInstance', 'queryObj', ($scope, $modalInstance, queryObj) ->
+    $scope.queryObj = queryObj
+
+    $scope.ok = ->
+      $modalInstance.close($scope.queryObj)
+    $scope.cancel = ->
+      $modalInstance.dismiss('cancel')
 
     # TODO: Don't Repeat Yourself
     # Available Values
     $scope.muscleGroups = [
+      ""
       "abs"
       "back"
       "biceps"
@@ -120,6 +146,7 @@ angular.module('staticshowdownApp')
       "fullbody"
     ]
     $scope.types = [
+      ""
       "strength"
       "plyometrics"
       "cardio"
@@ -135,6 +162,7 @@ angular.module('staticshowdownApp')
       "kettlebell"
     ]
     $scope.difficulties = [
+      ""
       "beginner"
       "intermediate"
       "expert"
@@ -146,6 +174,9 @@ angular.module('fitRouletteFilters', [])
     (workouts, query) ->
       result = {}
       angular.forEach workouts, (workout, key) ->
-        if workout.name.indexOf(query.name) != -1
+        if (workout.name != "" and workout.name.indexOf(query.name) != -1) and
+          (workout.mainMuscleGroup != "" and workout.mainMuscleGroup.indexOf(query.mainMuscleGroup) != -1) and
+          (workout.type != "" and workout.type.indexOf(query.type) != -1) and
+          (workout.difficulty != "" and workout.difficulty.indexOf(query.difficulty) != -1)
             result[key] = workout
       return result
