@@ -1,0 +1,38 @@
+%h1 Add New Workout
+%form(name="workoutForm" novalidate)
+  %h2 Name
+  .form-group(ng-class="{ 'has-error' : workoutForm.name.$invalid && submitted }")
+    %input.form-control(name="name" type="text" ng-model="workout.name" required)
+    %p.help-block(ng-show="workoutForm.name.$invalid && submitted") Name is required
+
+  %h2 Main Muscle Group
+  .form-group(ng-class="{ 'has-error' : workoutForm.mainMuscleGroup.$invalid && submitted }")
+    %select.form-control(name="mainMuscleGroup" ng-model="workout.mainMuscleGroup" ng-options="m for m in muscleGroups" required)
+    %p.help-block(ng-show="workoutForm.mainMuscleGroup.$invalid && submitted") Main Muscle Group is required
+
+  %h2 Sub Muscle Groups
+  .sub-muscle-groups.btn-group(ng-repeat="muscleGroup in muscleGroups")
+    %button.btn(ng-model="workout.subMuscleGroups[muscleGroup]" btn-checkbox) {{muscleGroup}}
+
+  %h2 Type
+  .form-group(ng-class="{ 'has-error' : workoutForm.type.$invalid && submitted }")
+    %select.form-control(name="type" ng-model="workout.type" ng-options="t for t in types" required)
+    %p.help-block(ng-show="workoutForm.type.$invalid && submitted") Type is required
+
+  %h2 Equipments
+  .equipments.btn-group(ng-repeat="equipment in equipments")
+    %button.btn(ng-model="workout.equipments[equipment]" btn-checkbox) {{equipment}}
+
+  %h2 Difficulty
+  .form-group(ng-class="{ 'has-error' : workoutForm.difficulty.$invalid && submitted }")
+    %select.form-control(name="difficulty" ng-model="workout.difficulty" ng-options="d for d in difficulties" required)
+    %p.help-block(ng-show="workoutForm.difficulty.$invalid && submitted") Difficulty is required
+
+  %h2 Description
+  %textarea.form-control(ng-model="workout.description")
+
+  %h2 Youtube ID
+  %input.form-control(type="text" ng-model="workout.youtube")
+
+  %h2 Save
+  %button.btn.btn-primary.btn-block(ng-click="save()") SAVE

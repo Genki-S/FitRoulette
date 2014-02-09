@@ -1,0 +1,28 @@
+%h1 {{workout.name}}
+
+%dl.dl-horizontal
+  %dt Main Muscle Group
+  %dd {{workout.mainMuscleGroup}}
+
+  %dt Sub Muscle Groups
+  %dd
+    %ul
+      %li(ng-repeat="m in workout.subMuscleGroups") {{m}}
+
+  %dt Type
+  %dd {{workout.type}}
+
+  %dt Equipments
+  %dd
+    %ul
+      %li(ng-repeat="e in workout.equipments") {{e}}
+
+  %dt Difficulty
+  %dd {{workout.difficulty}}
+
+  %dt Description
+  %dd {{workout.description}}
+
+.youtube(ng-show="workout.youtube")
+  %h2 Video
+  %iframe(type="text/html" ng-src="{{youtubeSrc(workout.youtube)}}" width="600" height="400" frameborder="0")
