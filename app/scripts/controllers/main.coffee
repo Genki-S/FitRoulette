@@ -1,13 +1,36 @@
 'use strict'
 
 angular.module('staticshowdownApp')
-  .controller 'MainCtrl', ['$scope', '$firebase', '$location', ($scope, $firebase, $location) ->
+  .controller 'MainCtrl', ['$scope', '$firebase', '$location', '$modal', '$filter', ($scope, $firebase, $location, $modal, $filter) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     workouts = $firebase(workoutRef);
     $scope.play = ->
-      keys = workouts.$getIndex()
+      filteredWorkouts = $filter('workoutFilter')(workouts, $scope.queryObj)
+      keys = []
+      for k, v of filteredWorkouts
+        keys.push(k)
       hit = keys[Math.floor(Math.random() * keys.length)]
       $location.path("/workout/#{hit}")
+
+    # TODO: Don't Repeat Yourself
+    $scope.filter = ->
+      modalInstance = $modal.open
+        templateUrl: 'views/filter.html'
+        controller: 'FilterCtrl'
+        resolve:
+          queryObj: ->
+            $scope.queryObj
+
+      modalInstance.result.then (queryObj) ->
+        $scope.queryObj = queryObj
+
+    $scope.queryObj = {
+      name: ""
+      mainMuscleGroup: ""
+      equipments: {}
+      type: ""
+      difficulty: ""
+    }
   ]
 
 angular.module('staticshowdownApp')
