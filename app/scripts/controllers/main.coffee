@@ -21,3 +21,47 @@ angular.module('staticshowdownApp')
       }
     ]
   ]
+
+angular.module('staticshowdownApp')
+  .controller 'WorkoutCtrl', ['$scope', ($scope) ->
+    # Available Values
+    $scope.muscleGroups = [
+      "abs"
+      "back"
+      "biceps"
+      "chest"
+      "forearm"
+      "glutes"
+      "shoulders"
+      "triceps"
+      "upper legs"
+      "lower legs"
+      "fullbody"
+    ]
+    $scope.types = [
+      "strength"
+      "plyometrics"
+      "cardio"
+      "stretching"
+    ]
+    $scope.equipments = [
+      "balance ball"
+      "band"
+      "barbell"
+      "bench"
+      "dumbbell"
+      "foam roller"
+      "kettlebell"
+    ]
+    $scope.difficulties = [
+      "beginner"
+      "intermediate"
+      "expert"
+    ]
+
+    # Construct
+    $scope.workout = {
+      subMuscleGroups: {}
+      equipments: {}
+    }
+  ]

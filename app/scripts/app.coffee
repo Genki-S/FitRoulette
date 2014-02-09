@@ -12,5 +12,8 @@ angular.module('staticshowdownApp', [
       .when '/',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
+      .when '/manage',
+        templateUrl: 'views/manage.html'
+        controller: 'WorkoutCtrl'
       .otherwise
         redirectTo: '/'
