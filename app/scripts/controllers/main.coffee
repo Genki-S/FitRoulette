@@ -47,14 +47,22 @@ angular.module('staticshowdownApp')
       "expert"
     ]
 
-    # Construct
-    $scope.workout = {
-      subMuscleGroups: {}
-      equipments: {}
-    }
+    # Reset
+    $scope.reset = ->
+      $scope.submitted = false
+      $scope.workout = {
+        subMuscleGroups: {}
+        equipments: {}
+      }
+    $scope.reset()
 
     # For submission
     $scope.save = ->
+      $scope.submitted = true
+      if $scope.workoutForm.$invalid
+        alert("Form is invalid")
+        return
+
       # Sanitize
       subMuscleGroups = []
       equipments = []
@@ -70,6 +78,7 @@ angular.module('staticshowdownApp')
       workouts.$add($scope.workout)
 
       alert("Workout Saved!")
+      $scope.reset()
   ]
 
 angular.module('staticshowdownApp')
