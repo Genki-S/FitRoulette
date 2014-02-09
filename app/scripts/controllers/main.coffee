@@ -55,9 +55,20 @@ angular.module('staticshowdownApp')
 
     # For submission
     $scope.save = ->
+      # Sanitize
+      subMuscleGroups = []
+      equipments = []
+      for key, checked of $scope.workout.subMuscleGroups
+        subMuscleGroups.push(key) if checked
+      for key, checked of $scope.workout.equipments
+        equipments.push(key) if checked
+      $scope.workout.subMuscleGroups = subMuscleGroups
+      $scope.workout.equipments = equipments
+
       workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
       workouts = $firebase(workoutRef)
       workouts.$add($scope.workout)
+
       alert("Workout Saved!")
   ]
 
