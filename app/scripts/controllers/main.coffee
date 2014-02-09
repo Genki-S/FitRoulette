@@ -3,9 +3,9 @@
 angular.module('staticshowdownApp')
   .controller 'MainCtrl', ['$scope', '$firebase', '$location', '$modal', '$filter', ($scope, $firebase, $location, $modal, $filter) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
-    workouts = $firebase(workoutRef);
+    $scope.workouts = $firebase(workoutRef);
     $scope.play = ->
-      filteredWorkouts = $filter('workoutFilter')(workouts, $scope.queryObj)
+      filteredWorkouts = $filter('workoutFilter')($scope.workouts, $scope.queryObj)
       keys = []
       for k, v of filteredWorkouts
         keys.push(k)
@@ -214,3 +214,6 @@ angular.module('fitRouletteFilters', [])
             add = false
         result[key] = workout if add
       return result
+  .filter 'objLength', ->
+    (obj) ->
+      (k for own k of obj).length

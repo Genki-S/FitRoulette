@@ -3,4 +3,6 @@
   with community driven workout database.
 
 %button.btn.btn-block(ng-click="filter()") Filter
+%p
+  Current Match: {{workouts | workoutFilter:queryObj | objLength}} workout(s)
 %button.btn.btn-primary.btn-block(ng-click="play()") PLAY
