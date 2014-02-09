@@ -3,6 +3,20 @@
   with community driven workout database.
 
 %button.btn.btn-block(ng-click="filter()") Filter
-%p
-  Current Match: {{workouts | workoutFilter:queryObj | objLength}} workout(s)
+.current-filter
+  %h2 Current Filter
+  %dl.dl-horizontal
+    %dt Name
+    %dd {{queryObj.name}}
+    %dt Main Muscle Group
+    %dd {{queryObj.mainMuscleGroup}}
+    %dt Equipments
+    %dd {{queryObj.equipments | trueKeys}}
+    %dt Type
+    %dd {{queryObj.type}}
+    %dt Difficulty
+    %dd {{queryObj.difficulty}}
+.current-match
+  %h2 Current Match
+  %p {{workouts | workoutFilter:queryObj | objLength}} workout(s)
 %button.btn.btn-primary.btn-block(ng-click="play()") PLAY

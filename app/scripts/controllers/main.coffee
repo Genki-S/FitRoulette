@@ -217,3 +217,9 @@ angular.module('fitRouletteFilters', [])
   .filter 'objLength', ->
     (obj) ->
       (k for own k of obj).length
+  .filter 'trueKeys', ->
+    (obj) ->
+      keys = []
+      for own k of obj
+        keys.push(k) if obj[k]
+      return keys
