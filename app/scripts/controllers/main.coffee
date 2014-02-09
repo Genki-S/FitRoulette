@@ -82,11 +82,13 @@ angular.module('staticshowdownApp')
   ]
 
 angular.module('staticshowdownApp')
-  .controller 'WorkoutDetailCtrl', ['$scope', '$firebase', '$routeParams', ($scope, $firebase, $routeParams) ->
+  .controller 'WorkoutDetailCtrl', ['$scope', '$firebase', '$routeParams', '$sce', ($scope, $firebase, $routeParams, $sce) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     workouts = $firebase(workoutRef)
     workouts.$on 'loaded', ->
       $scope.workout = workouts[$routeParams.key]
+    $scope.youtubeSrc = (id) ->
+      $sce.trustAsResourceUrl('http://www.youtube.com/embed/' + id)
   ]
 
 angular.module('staticshowdownApp')
