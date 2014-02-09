@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('staticshowdownApp')
-  .controller 'MainCtrl', ['$scope', '$firebase', '$location', '$modal', '$filter', ($scope, $firebase, $location, $modal, $filter) ->
+  .controller 'MainCtrl', ['$scope', '$firebase', '$location', '$modal', '$filter', 'localStorageService', ($scope, $firebase, $location, $modal, $filter, localStorageService) ->
     workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
     $scope.workouts = $firebase(workoutRef);
     $scope.play = ->
@@ -27,13 +27,15 @@ angular.module('staticshowdownApp')
       modalInstance.result.then (queryObj) ->
         $scope.queryObj = queryObj
 
-    $scope.queryObj = {
-      name: ""
-      mainMuscleGroup: ""
-      equipments: {}
-      type: ""
-      difficulty: ""
-    }
+    $scope.queryObj = localStorageService.get('fitRouletteQuery')
+    unless $scope.queryObj?
+      $scope.queryObj = {
+        name: ""
+        mainMuscleGroup: ""
+        equipments: {}
+        type: ""
+        difficulty: ""
+      }
   ]
 
 angular.module('staticshowdownApp')
@@ -147,10 +149,11 @@ angular.module('staticshowdownApp')
   ]
 
 angular.module('staticshowdownApp')
-  .controller 'FilterCtrl', ['$scope', '$modalInstance', 'queryObj', ($scope, $modalInstance, queryObj) ->
+  .controller 'FilterCtrl', ['$scope', '$modalInstance', 'localStorageService', 'queryObj', ($scope, $modalInstance, localStorageService, queryObj) ->
     $scope.queryObj = queryObj
 
     $scope.ok = ->
+      localStorageService.add('fitRouletteQuery', $scope.queryObj)
       $modalInstance.close($scope.queryObj)
     $scope.cancel = ->
       $modalInstance.dismiss('cancel')

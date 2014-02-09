@@ -7,6 +7,7 @@ angular.module('staticshowdownApp', [
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
+  'LocalStorageModule',
   'firebase'
 ])
   .config ($routeProvider) ->
