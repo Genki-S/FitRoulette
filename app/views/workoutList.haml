@@ -1,0 +1,20 @@
+%a.btn.btn-primary.btn-block(href="#/workout/new") Add Workout
+
+%h1 Workouts
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Main Muscle Group
+      %th Type
+      %th Difficulty
+      %th Controls
+  %tbody
+    %tr(ng-repeat="(key, workout) in workouts")
+      %td
+        %a(href="#/workout/{{key}}") {{workout.name}}
+      %td {{workout.mainMuscleGroup}}
+      %td {{workout.type}}
+      %td {{workout.difficulty}}
+      %td
+        %button.btn.btn-danger(ng-click="delete(key)") Delete

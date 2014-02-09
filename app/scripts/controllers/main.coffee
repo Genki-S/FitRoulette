@@ -88,3 +88,12 @@ angular.module('staticshowdownApp')
     workouts.$on 'loaded', ->
       $scope.workout = workouts[$routeParams.key]
   ]
+
+angular.module('staticshowdownApp')
+  .controller 'WorkoutListCtrl', ['$scope', '$firebase', ($scope, $firebase) ->
+    workoutRef = new Firebase("//torid-fire-5454.firebaseIO.com/workouts")
+    $scope.workouts = $firebase(workoutRef)
+    $scope.delete = (key) ->
+      if confirm("Delete workout \"#{$scope.workouts[key].name}\"?")
+        $scope.workouts.$remove(key)
+  ]

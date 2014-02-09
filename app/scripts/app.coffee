@@ -13,8 +13,11 @@ angular.module('staticshowdownApp', [
       .when '/',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
-      .when '/manage',
-        templateUrl: 'views/manage.html'
+      .when '/workouts',
+        templateUrl: 'views/workoutList.html'
+        controller: 'WorkoutListCtrl'
+      .when '/workout/new',
+        templateUrl: 'views/workoutNew.html'
         controller: 'WorkoutCtrl'
       .when '/workout/:key',
         templateUrl: 'views/workout.html'
