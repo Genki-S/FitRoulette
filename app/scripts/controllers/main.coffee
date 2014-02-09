@@ -173,10 +173,18 @@ angular.module('fitRouletteFilters', [])
   .filter 'workoutFilter', ->
     (workouts, query) ->
       result = {}
+      # TODO: Super ugly. Refactor.
       angular.forEach workouts, (workout, key) ->
-        if (workout.name != "" and workout.name.indexOf(query.name) != -1) and
+        add = true
+        unless (workout.name != "" and workout.name.indexOf(query.name) != -1) and
           (workout.mainMuscleGroup != "" and workout.mainMuscleGroup.indexOf(query.mainMuscleGroup) != -1) and
           (workout.type != "" and workout.type.indexOf(query.type) != -1) and
           (workout.difficulty != "" and workout.difficulty.indexOf(query.difficulty) != -1)
-            result[key] = workout
+            add = false
+        for equipment, checked of query.equipments
+          if checked and (not workout.equipments?)
+            add = false
+          else if checked and (not (equipment in workout.equipments))
+            add = false
+        result[key] = workout if add
       return result
